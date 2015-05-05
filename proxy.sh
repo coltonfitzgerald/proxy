@@ -3,11 +3,19 @@ function setProxies {
   npm config set proxy $proxy
   npm config set https-proxy $proxy
 
-  # Ruby
-  # ruby = "export http_proxy=\"$proxy\""
-  # ruby
-  # ruby = "export ALL_PROXY=\"$proxy\""
-  # ruby
+  if [ -f "$HOME/.zshrc" ]; then
+    echo "export ALL_PROXY=\"$proxy\"" >> ~/.zshrc
+    sed -i '/unset HTTP_PROXY/d' ~/.zshrc
+    sed -i '/unset http_proxy/d' ~/.zshrc
+    sed -i '/unset ALL_PROXY/d' ~/.zshrc
+    echo "Added to ~/.zshrc"
+  else
+    echo "export ALL_PROXY=\"$proxy\"" >> ~/.bashrc
+    sed -i '/unset HTTP_PROXY/d' ~/.bashrc
+    sed -i '/unset http_proxy/d' ~/.bashrc
+    sed -i '/unset ALL_PROXY/d' ~/.bashrc
+    echo "Added to ~/.bashrc"
+  fi
 
   # Git
   git config --global http.proxy $proxy
@@ -19,8 +27,19 @@ function unsetProxies {
   npm config delete https-proxy
 
   # Ruby
-  unset http_proxy
-  unset ALL_PROXY
+  if [ -f "$HOME/.zshrc" ]; then
+    sed -i '/export ALL_PROXY/d' ~/.zshrc
+    echo "unset HTTP_PROXY" >> ~/.zshrc
+    echo "unset http_proxy" >> ~/.zshrc
+    echo "unset ALL_proxy" >> ~/.zshrc
+    echo "Removed From ~/.zshrc"
+  else
+    sed -i '/export ALL_PROXY/d' ~/.bashrc
+    echo "unset HTTP_PROXY" >> ~/.bashrc
+    echo "unset http_proxy" >> ~/.bashrc
+    echo "unset ALL_proxy" >> ~/.bashrc
+    echo "Removed From ~/.bashrc"
+  fi
 
   # Git
   git config --unset --global http.proxy
