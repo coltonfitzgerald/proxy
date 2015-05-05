@@ -4,8 +4,10 @@ function setProxies {
   npm config set https-proxy $proxy
 
   # Ruby
-  export http_proxy="$proxy"
-  export ALL_PROXY="$proxy"
+  # ruby = "export http_proxy=\"$proxy\""
+  # ruby
+  # ruby = "export ALL_PROXY=\"$proxy\""
+  # ruby
 
   # Git
   git config --global http.proxy $proxy
