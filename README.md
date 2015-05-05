@@ -9,8 +9,8 @@ $ npm config set https-proxy http://proxy.company.com:8080
 ### Removing
 
 ```sh
-$ npm config unset proxy http://proxy.company.com:8080
-$ npm config unset https-proxy http://proxy.company.com:8080
+$ npm config delete proxy
+$ npm config delete https-proxy
 ```
 
 ## Ruby
